@@ -38,10 +38,6 @@ module.exports = {
             return interaction.reply({ embeds: [response] });
         }
 
-        if (Role.position > user.roles.highest.position) { // Regarder pourquoi marche pas 
-            response.setDescription("Je ne peux pas ajouter de rôle au dessus de moi.")
-            return interaction.reply({ embeds: [Response] });
-        }
         response.setDescription(`Tu as bien ajouter le rôle ${Role} à ${target}`);
         interaction.reply({ embeds: [response] })
 
