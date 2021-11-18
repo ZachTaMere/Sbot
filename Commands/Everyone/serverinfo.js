@@ -46,7 +46,7 @@ module.exports = {
             .addField("🚀 Boosts", `**Niveau** : ${premiumTier[guild.premiumTier]} | ${guild.premiumSubscriptionCount} boosts`, true)
             .addField("🤖 Niveau de vérification", verifLevels[guild.verificationLevel], true)
             .addField("⏲️ Date de création", `<t:${parseInt(guild.createdTimestamp / 1000)}:R>`, true)
-            .addField("🐱‍👤 Status de membre", `${presenceString}`, true)
+            .addField("🐱‍👤 Status des membres", `${presenceString}`, true)
             .addField("📜", `**Rôles** : ${guild.roles.cache.filter((role) => role.name != "@everyone").size.toString()}`, true)
             .setFooter(`${client.user.username}`, client.user.avatarURL({ dynamic: true }))
             .setTimestamp()

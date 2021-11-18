@@ -35,6 +35,5 @@ module.exports = {
             .addField("Utilisateur Discord depuis", `<t:${parseInt(target.createdTimestamp / 1000)}:R>`, true)
         
         return interaction.reply({embeds: [response] });
-
     }
 }
