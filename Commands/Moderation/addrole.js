@@ -42,13 +42,13 @@ module.exports = {
         }
 
         // check if the member has a higher role than the ${Role}
-        if (Role.position > member.roles.highest.position) {
+        if (Role.position >= member.roles.highest.position) {
             response.setDescription("Tu ne peux ajouter des rôles plus haut que toi.")
             return interaction.reply({ embeds: [response] });
         }
 
         // check if the bot has a higher role than the ${Role}
-        if (Role.position > guild.members.resolve(client.user).roles.highest.position) {
+        if (Role.position >= guild.members.resolve(client.user).roles.highest.position) {
             response.setDescription("Je ne peux pas ajouter des rôles plus haut que moi.")
             return interaction.reply({ embeds: [response] });
         }
