@@ -30,7 +30,7 @@ module.exports = {
 
         const response = new MessageEmbed()
             .setColor("RANDOM")
-            .setAuthor("REGARDER PQ MARCHE PAS", target.displayAvatarURL({ dynamic: true, siza: 512}))
+            .setAuthor(interaction.user, target.displayAvatarURL({ dynamic: true, siza: 512}))
             .setThumbnail(target.displayAvatarURL({dynamic: true, siza: 512}))
 
         if (Role.position > member.roles.highest.position) {
