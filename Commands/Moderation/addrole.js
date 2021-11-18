@@ -36,7 +36,7 @@ module.exports = {
             .setFooter(client.user.username, client.user.displayAvatarURL({ dynamic: true, size:512 }))
 
         // check if the ${target} is the bot
-        if (target === client.user) {
+        if (target === guild.members.resolve(client.user)) {
             response.setDescription("Tu ne peux pas m'ajouter de rôle !")
             return interaction.reply({ embeds: [response] });  
         }
