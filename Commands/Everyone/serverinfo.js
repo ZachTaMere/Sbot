@@ -12,7 +12,6 @@ module.exports = {
         const guild = interaction.guild;
         await guild.members.fetch();
         const guildOwner = await guild.fetchOwner();
-        const channelCache = guild.channels.cache;
         const presenceCache = guild.presences.cache;
 
         // Presence calculation
