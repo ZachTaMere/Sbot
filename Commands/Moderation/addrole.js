@@ -4,6 +4,7 @@ const { execute } = require("../../Events/ready");
 module.exports = {
     name: "addrole",
     description: "Donner un rôle à un utilisateur.",
+    permission: "MANAGE_ROLES",
     options: [
         {
             name: "membre",
