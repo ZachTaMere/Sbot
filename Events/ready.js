@@ -14,13 +14,13 @@ module.exports = {
             useUnifiedTopology: true
             
         }).then(() => {
-            console.log("The client is now connected to the database ✅");
+            console.log("Connected to the database ✅");
         }).catch((err) => console.log(err))
 
         const rdy = client.channels.cache.find(ch => ch.id === "667988224878182402");
 
         client.user.setActivity("Yo !", { type: "PLAYING"});
         client.user.setStatus("online");
-        rdy.send("✅ Bot connecté et prêt")
+        rdy.send("✅ Bot connecté et prêt ma couille")
     }
 }
