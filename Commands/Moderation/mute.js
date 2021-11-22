@@ -132,7 +132,7 @@ module.exports = {
                 console.log(`Je n'es pas pu envoyer le message à ${target.user.tag}`);
             });
 
-            response.setDescription(`${target} | \`${target.id}\`a été **mute**\nModérateur : ${member}\nRaison : ${reason}\nDurée : ${duration}`);
+            response.setDescription(`${target} | \`${target.id}\` a été **mute**\nModérateur : ${member}\nRaison : ${reason}\nDurée : ${duration}`);
             interaction.reply({ embeds: [response] })
 
             await target.roles.add(mute.id)

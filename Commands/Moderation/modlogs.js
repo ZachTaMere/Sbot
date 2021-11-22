@@ -70,7 +70,7 @@ module.exports = {
                         interaction.reply({embeds: [response]});
                     } else {
                         response.setDescription(`${target} n'a aucune infraction`);
-                        interaction.reply({embdes: [response]});
+                        interaction.reply({embeds: [response]});
                     }
                 })
                 break;
