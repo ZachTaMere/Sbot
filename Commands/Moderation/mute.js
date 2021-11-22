@@ -27,6 +27,10 @@ module.exports = {
             required: true,
             choices: [
                 {
+                    name: "1 minute",
+                    value: "1m"
+                },
+                {
                     name: "30 minutes",
                     value: "30m"
                 },
@@ -133,7 +137,7 @@ module.exports = {
 
             await target.roles.add(mute.id)
             setTimeout(async () => {
-                if (!target.roles.has(mute.id)) return;
+                if (!target.roles.cache.has(mute.id)) return;
                 await target.roles.remove(mute);
             }, ms(duration));
     }

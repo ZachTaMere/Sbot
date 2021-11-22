@@ -84,11 +84,10 @@ module.exports = {
         const warnID = options.getNumber("warnid") - 1;
         const warnDate = moment.utc(interaction.createdAt).format("DD/MM/YYYY");
         const warnEmbed = new MessageEmbed()
-            .setAuthor(interaction.user.tag, interaction.user.displayAvatarURL({ dynamic: true, size: 512 }))
-            .setTitle("MODERATION SYSTEM")
+            .setAuthor("Moderation System", interaction.guild.iconURL({ dynamic: true, size: 512 }))
             .setColor("RED")
-            .setFooter(`S'bot - Warn System`, guild.members.resolve(client.user).displayAvatarURL({ dynamic: true, size: 512 }))
             .setThumbnail(target.displayAvatarURL({ dynamic: true, size: 512 }))
+            .setTimestamp()
             switch (sub) {
                 case "add":
                     db.findOne({ GuildID: interaction.guildId, UserID: target.id }, async(err, data) => {
@@ -117,14 +116,15 @@ module.exports = {
                         };
                         data.save();
                     });
-                    warnEmbed.setDescription(`**Avertissement ajouter à :** ${target.user.tag} | ${target.id}\n**Raison**: ${raison}`);
+                    warnEmbed.setDescription(`**Avertissement ajouter à :** ${target.user.tag} | \`${target.id}\`\n**Raison**: ${raison}`);
                     interaction.reply({ embeds: [warnEmbed] });
                     break;
                 case "check":
                     db.findOne({ GuildID: interaction.guildId, UserID: target.id }, async(err, data) => {
                         if (err) throw err;
                         if (data?.WarnData.length > 0 && data) {
-                            warnEmbed.setFooter(`Avertissements de : ${target.user.tag}`)
+                            warnEmbed.setColor("PURPLE")
+                            warnEmbed.setAuthor(`Historique d'avertissement de ${target.user.tag}`, interaction.guild.iconURL({ dynamic: true, size:512 }))
                             warnEmbed.setDescription(`${data.WarnData.map(
                                 (w, i) => `\n**ID**: ${i + 1}\n**Par**: ${w.ExecuterTag} | ${w.ExecuterID}\n**Date**: ${w.Date}\n**Raison**: ${w.Reason}
                                 \n`
