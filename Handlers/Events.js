@@ -21,7 +21,7 @@ module.exports = async (client) => {
             client.on(event.name, (...args) => event.execute(client, ...args));
         };
 
-        table.addRow(event.name, "✔️ SUCCESSFUL");
+        table.addRow(event.name, "✔️ SUCCESSFUL ");
     });
     console.log(table.toString());
 };

@@ -1,5 +1,4 @@
 const { MessageEmbed } = require("discord.js");
-const { execute } = require("../../Events/ready");
 
 module.exports = {
     name: "userinfo",

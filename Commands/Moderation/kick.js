@@ -1,4 +1,6 @@
 const { CommandInteraction, MessageEmbed } = require('discord.js');
+const db = require('../../utils/Models/infractionsDB');
+const moment = require('moment');
 
 module.exports = {
     name: "kick",
@@ -25,55 +27,86 @@ module.exports = {
     async execute(client, interaction) {
         const{ guild, member, options } = interaction;
 
-        const Target = options.getMember("membre");
-        const Reason = options.getString("raison");
-        const Amount = options.getNumber("message");
+        const target = options.getMember("membre");
+        const reason = options.getString("raison");
+        const kickDate = moment.utc(interaction.createdAt).format("DD/MM/YYYY");
 
         const Response = new MessageEmbed()
             .setColor("RED")
             .setAuthor(`${guild.name} - MODERATION SYSTEM`, guild.iconURL({ dynamic: true }))
-            .setThumbnail(Target.displayAvatarURL({ dynamic: true, size: 512 }))
+            .setThumbnail(target.displayAvatarURL({ dynamic: true, size: 512 }))
             .setFooter("Auteur : " + interaction.user.username, interaction.user.displayAvatarURL({ dynamic: true, size:512 }))
             .setTimestamp()
 
             // Several checking: if the target is the bot
-        if (Target === guild.members.resolve(client.user)) {
+        if (target === guild.members.resolve(client.user)) {
             Response.setDescription("⛔ Tu essaie de kick le bot ?!")
             return interaction.reply({ embeds: [Response] });
         }
             // if the target is the command involver
-        if (Target.id === member.id) {
+        if (target.id === member.id) {
             Response.setDescription("⛔ Tu ne peux pas t'expulser toi même.")
             return interaction.reply({ embeds: [Response] });
         }
             // if the target as a higher role position than the command involver
-        if (Target.roles.highest.position >= member.roles.highest.position) {
+        if (target.roles.highest.position >= member.roles.highest.position) {
             Response.setDescription("⛔ Tu ne peux pas expulser une personne ayant un rôle supérieur ou égal à toi.")
             return interaction.reply({ embeds: [Response] });
         }
 
+        db.findOne({ GuildID: interaction.guild.id, UserID: target.id }, async (err, data) => {
+            if (err) throw (err);
+            if (!data || !data.KickData) {
+                data = new db({
+                    GuildID: guild.id,
+                    UserID: target.id,
+                    KickData: [
+                        {
+                            ExecuterID: member.id,
+                            ExecuterTag: member.user.tag,
+                            TargetID: target.id,
+                            TargetTag: target.user.tag,
+                            Reason: reason,
+                            Date: kickDate
+                        }
+                    ]
+                })
+            } else {
+                const KickDataObject = {
+                    ExecuterID: member.id,
+                    ExecuterTag: member.user.tag,
+                    TargetID: target.id,
+                    TargetTag: target.user.tag,
+                    Reason: reason,
+                    Date: kickDate
+                }
+                data.KickData.push(KickDataObject);
+            }
+            data.save();
+        })
+
             // Send a DM to the kicked
-        await Target.send({embeds:[
+        await target.send({embeds:[
             new MessageEmbed()
             .setColor("RED")
             .setAuthor(`${guild.name} - MODERATION SYSTEM`, guild.iconURL({ dynamic: true }))
-            .setDescription(`Tu as été expulser pour la raison suivante : ${Reason}`)
-            .setThumbnail(Target.displayAvatarURL({ dynamic: true, size: 512 }))
+            .setDescription(`Tu as été expulser pour la raison suivante : ${reason}`)
+            .setThumbnail(target.displayAvatarURL({ dynamic: true, size: 512 }))
             .setFooter("Auteur : " + interaction.user.username, interaction.user.displayAvatarURL({ dynamic: true, size:512 }))
             .setTimestamp()
-        ]}).catch(() => {console.log(`Je ne peux pas envoyer le message d'expulsion à ${Target.user.tag}`) });
+        ]}).catch(() => {console.log(`Je ne peux pas envoyer le message d'expulsion à ${target.user.tag}`) });
 
             // Reply in the channel where the command was involved 
-        Response.setDescription(`${Target} a été expulser pour : ${Reason}`)
+        Response.setDescription(`${target} a été expulser pour : ${reason}`)
         interaction.reply({ embeds: [Response] })
 
             // Kick the target person
-        Target.kick({ reason: Reason })
+        target.kick({ reason: reason })
         .catch((error) => { console.log(error) });
 
             // Send in log channel a log message
-        Response.setFooter("LOGS SYSTEM", interaction.user.displayAvatarURL({ dynamic: true }))
-        Response.setDescription(`L'utilisateur ${Target.user.tag} / ${Target.user.id} a été expulser pour la raison suivante : ${Reason}`)
+        Response.setFooter("LOGS SYSTEM")
+        Response.setDescription(`L'utilisateur ${target.user.tag} / ${target.user.id} a été expulser pour la raison suivante : ${reason}`)
         Response.addField("Auteur De L'expulsion :", interaction.user.username)
         guild.channels.cache.get("909915653547376672").send({embeds: [Response] });
     }

@@ -1,5 +1,4 @@
 const { CommandInteraction, MessageEmbed, Client } = require("discord.js");
-const { execute } = require("../../Events/ready");
 
 module.exports = {
     name: "addrole",

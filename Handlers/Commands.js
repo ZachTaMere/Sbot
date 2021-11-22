@@ -30,7 +30,7 @@ module.exports = async (client) => {
         client.commands.set(command.name, command);
         CommandsArray.push(command);
 
-        table.addRow(command.name, "✔️ SUCCESSFUL");
+        table.addRow(command.name, "✔️ SUCCESSFUL ");
     });
 
     console.log(table.toString());

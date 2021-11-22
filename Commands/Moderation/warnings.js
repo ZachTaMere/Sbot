@@ -1,5 +1,5 @@
 const { Client, CommandInteraction, MessageEmbed } = require('discord.js');
-const db = require('../../utils/Models/warningDB');
+const db = require('../../utils/Models/infractionsDB');
 const moment = require('moment');
 
 module.exports = {
@@ -91,14 +91,13 @@ module.exports = {
             .setThumbnail(target.displayAvatarURL({ dynamic: true, size: 512 }))
             switch (sub) {
                 case "add":
-                    db.findOne({ GuildID: interaction.guildId, UserID: target.id, UserTag: target.user.tag }, async(err, data) => {
+                    db.findOne({ GuildID: interaction.guildId, UserID: target.id }, async(err, data) => {
                         if (err) throw err;
                         if (!data) {
                             data = new db({
                                 GuildID: interaction.guildId,
                                 UserID: target.id,
-                                UserTag: target.user.tag,
-                                Content: [
+                                WarnData: [
                                     {
                                         ExecuterID: interaction.user.id,
                                         ExecuterTag: interaction.user.tag,
@@ -114,7 +113,7 @@ module.exports = {
                                 Reason: raison,
                                 Date: warnDate
                             }
-                            data.Content.push(obj)
+                            data.WarnData.push(obj)
                         };
                         data.save();
                     });
@@ -122,11 +121,11 @@ module.exports = {
                     interaction.reply({ embeds: [warnEmbed] });
                     break;
                 case "check":
-                    db.findOne({ GuildID: interaction.guildId, UserID: target.id, UserTag: target.user.tag }, async(err, data) => {
+                    db.findOne({ GuildID: interaction.guildId, UserID: target.id }, async(err, data) => {
                         if (err) throw err;
-                        if (data?.Content.length > 0 && data) {
+                        if (data?.WarnData.length > 0 && data) {
                             warnEmbed.setFooter(`Avertissements de : ${target.user.tag}`)
-                            warnEmbed.setDescription(`${data.Content.map(
+                            warnEmbed.setDescription(`${data.WarnData.map(
                                 (w, i) => `\n**ID**: ${i + 1}\n**Par**: ${w.ExecuterTag} | ${w.ExecuterID}\n**Date**: ${w.Date}\n**Raison**: ${w.Reason}
                                 \n`
                             ).join(" ")}`);
@@ -138,10 +137,10 @@ module.exports = {
                     });
                     break;
                 case "delete":
-                    db.findOne({ GuildID: interaction.guildId, UserID: target.id, UserTag: target.user.tag }, async(err, data) => {
+                    db.findOne({ GuildID: interaction.guildId, UserID: target.id }, async(err, data) => {
                         if (err) throw err;
                         if (data) {
-                            data.Content.splice(warnID, 1);
+                            data.WarnData.splice(warnID, 1);
                             warnEmbed.setDescription(`**L'avertissement N°**: ${warnID + 1 } de ${target.user.tag} a été supprimer.`);
                             interaction.reply({ embeds: [warnEmbed] });
                             data.save();
@@ -152,10 +151,10 @@ module.exports = {
                     });
                     break;
                 case "clear":
-                    db.findOne({ GuildID: interaction.guildId, UserID: target.id, UserTag: target.user.tag }, async(err, data) => {
+                    db.findOne({ GuildID: interaction.guildId, UserID: target.id }, async(err, data) => {
                         if (err) throw err;
                         if (data) {
-                            await db.findOneAndDelete({ GuildID: interaction.guildId, UserID: target.id, UserTag: target.user.tag });
+                            await db.findOneAndDelete({ GuildID: interaction.guildId, UserID: target.id });
 
                             warnEmbed.setDescription(`Les avertissements de ${target.user.tag} ont été purger. | ${target.id}`);
                             interaction.reply({ embeds: [warnEmbed] });
