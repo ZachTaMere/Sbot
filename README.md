@@ -6,10 +6,9 @@
 - En cours de développement
 - Projet Public
 
-### Dernière Mise à jour - Infraction Update !(et plus)
-- Arrivée/réecriture des commandes d'infractions : ban, kick, mute, warnings
-- Arrivée de la commande clear et modlogs
-- Arrivée de la commande Informations dans le Context Menu
+### Dernière Mise à jour - Event Update (Small Update)
+- Création d'un embed de bienvenue et d'au revoir pour les events guildMemberAdd et guildMemberRemove
+- Création d'un ajout de rôle automatique lorsqu'une personne rejoins le serveur
 
 ### Prochaines updates
 - Prise en charge du multi-serveur *(A la fin car il y a une attente de **Une heure** pour update les Slash Commandes si le multi serveur est activé)*

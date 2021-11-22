@@ -7,7 +7,7 @@ const PG = promisify(glob);
 module.exports = async (client) => {
     const table = new Ascii('Events loaded');
 
-    (await PG(`${process.cwd()}/Events/*.js`)).map(async (file) => {
+    (await PG(`${process.cwd()}/Events/*/*.js`)).map(async (file) => {
         const event = require(file);
 
         if(!Events.includes(event.name) || !event.name) {
