@@ -12,15 +12,15 @@ module.exports = {
         mongoose.connect(DBURL, {
             useNewUrlParser: true,
             useUnifiedTopology: true
-            
+
         }).then(() => {
             console.log("Connected to the database ✅");
         }).catch((err) => console.log(err))
 
-        const rdy = client.channels.cache.find(ch => ch.id === "667988224878182402");
+        const rdy = client.channels.cache.find(ch => ch.id === "909915653547376672");
 
         client.user.setActivity("Yo !", { type: "PLAYING"});
         client.user.setStatus("online");
-        rdy.send("✅ Bot connecté et prêt ma couille")
+        rdy.send("✅ Bot connecté et prêt")
     }
 }
