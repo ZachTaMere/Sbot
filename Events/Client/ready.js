@@ -17,7 +17,7 @@ module.exports = {
             console.log("Connected to the database ✅");
         }).catch((err) => console.log(err))
 
-        const rdy = client.channels.cache.find(ch => ch.id === "909915653547376672");
+        const rdy = client.channels.cache.get("909915653547376672");
 
         client.user.setActivity("Yo !", { type: "PLAYING"});
         client.user.setStatus("online");
