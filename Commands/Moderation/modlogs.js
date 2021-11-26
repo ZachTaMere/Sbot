@@ -88,7 +88,7 @@ module.exports = {
                         return interaction.reply({embeds: [response]});
                     } else {
                         response.setDescription(`${target} n'a aucun avertissement`);
-                        interaction.reply({embdes: [response]});
+                        interaction.reply({embeds: [response]});
                     }
                 })
                 break;
@@ -106,7 +106,7 @@ module.exports = {
                         return interaction.reply({embeds: [response]});
                     } else {
                         response.setDescription(`${target} n'a aucun banissement`);
-                        interaction.reply({embdes: [response]});
+                        interaction.reply({embeds: [response]});
                     }
                 })
                 break;
@@ -124,7 +124,7 @@ module.exports = {
                         return interaction.reply({embeds: [response]});
                     } else {
                         response.setDescription(`${target} n'a aucune expulsion`);
-                        interaction.reply({embdes: [response]});
+                        interaction.reply({embeds: [response]});
                     }
                 })
                 break;
@@ -142,7 +142,7 @@ module.exports = {
                         return interaction.reply({embeds: [response]});
                     } else {
                         response.setDescription(`${target} n'a aucun mute`);
-                        interaction.reply({embdes: [response]});
+                        interaction.reply({embeds: [response]});
                     }
                 })
                 break;

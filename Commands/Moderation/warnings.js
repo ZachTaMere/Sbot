@@ -86,8 +86,6 @@ module.exports = {
         const warnEmbed = new MessageEmbed()
             .setAuthor("Moderation System", interaction.guild.iconURL({ dynamic: true, size: 512 }))
             .setColor("RED")
-            .setThumbnail(target.displayAvatarURL({ dynamic: true, size: 512 }))
-            .setTimestamp()
             switch (sub) {
                 case "add":
                     db.findOne({ GuildID: interaction.guildId, UserID: target.id }, async(err, data) => {
@@ -141,7 +139,7 @@ module.exports = {
                         if (err) throw err;
                         if (data) {
                             data.WarnData.splice(warnID, 1);
-                            warnEmbed.setDescription(`**L'avertissement N°**: ${warnID + 1 } de ${target.user.tag} a été supprimer.`);
+                            warnEmbed.setDescription(`**L'avertissement N°** ${warnID + 1 } de ${target.user.tag} a été supprimer.`);
                             interaction.reply({ embeds: [warnEmbed] });
                             data.save();
                         } else {

@@ -64,7 +64,7 @@ module.exports = {
 
         const response = new MessageEmbed()
             .setColor("BLUE")
-            .setAuthor("MODERATION SYSTEM", guild.iconURL({ dynamic: true}))
+            .setAuthor("Moderation System", guild.iconURL({ dynamic: true}))
 
             if (target === guild.members.resolve(client.user)) {
                 response.setDescription("⛔ Tu essaie de mute le bot ?!")
@@ -126,13 +126,13 @@ module.exports = {
             target.send({embeds: [
                 new MessageEmbed()
                     .setColor("RED")
-                    .setAuthor("MODERATION SYSTEM", guild.iconURL({ dynamic: true}))
+                    .setAuthor("Moderation System", guild.iconURL({ dynamic: true}))
                     .setDescription(`Vous avez été mute par ${member} dans **${guild.name}**\n**Raison** : ${reason}\n**Durée** : ${duration}`)
             ]}).catch(() => {
                 console.log(`Je n'es pas pu envoyer le message à ${target.user.tag}`);
             });
 
-            response.setDescription(`${target} | \`${target.id}\` a été **mute**\nModérateur : ${member}\nRaison : ${reason}\nDurée : ${duration}`);
+            response.setDescription(`${target} | \`${target.id}\` a été **mute**\n\n**Modérateur** : ${member}\n**Raison** : ${reason}\n**Durée** : ${duration}`);
             interaction.reply({ embeds: [response] })
 
             await target.roles.add(mute.id)

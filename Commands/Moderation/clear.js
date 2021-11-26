@@ -32,7 +32,7 @@ module.exports = {
         .setColor("GREEN")
 
         if (amount > 100) {
-            response.setDescription("Tu dois donner un nombre compris entre 0 et 100.")
+            response.setDescription("⛔ Tu dois donner un nombre compris entre 0 et 100.")
             interaction.reply({ embeds: [response] });
         }
 

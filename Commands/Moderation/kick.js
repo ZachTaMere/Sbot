@@ -33,10 +33,8 @@ module.exports = {
 
         const Response = new MessageEmbed()
             .setColor("RED")
-            .setAuthor(`${guild.name} - MODERATION SYSTEM`, guild.iconURL({ dynamic: true }))
-            .setThumbnail(target.displayAvatarURL({ dynamic: true, size: 512 }))
+            .setAuthor("Moderation System", guild.iconURL({ dynamic: true }))
             .setFooter("Auteur : " + interaction.user.username, interaction.user.displayAvatarURL({ dynamic: true, size:512 }))
-            .setTimestamp()
 
             // Several checking: if the target is the bot
         if (target === guild.members.resolve(client.user)) {
@@ -89,11 +87,9 @@ module.exports = {
         await target.send({embeds:[
             new MessageEmbed()
             .setColor("RED")
-            .setAuthor(`${guild.name} - MODERATION SYSTEM`, guild.iconURL({ dynamic: true }))
+            .setAuthor("Moderation System", guild.iconURL({ dynamic: true }))
             .setDescription(`Tu as été expulser pour la raison suivante : ${reason}`)
-            .setThumbnail(target.displayAvatarURL({ dynamic: true, size: 512 }))
             .setFooter("Auteur : " + interaction.user.username, interaction.user.displayAvatarURL({ dynamic: true, size:512 }))
-            .setTimestamp()
         ]}).catch(() => {console.log(`Je ne peux pas envoyer le message d'expulsion à ${target.user.tag}`) });
 
             // Reply in the channel where the command was involved 
@@ -105,7 +101,6 @@ module.exports = {
         .catch((error) => { console.log(error) });
 
             // Send in log channel a log message
-        Response.setFooter("LOGS SYSTEM")
         Response.setDescription(`L'utilisateur ${target.user.tag} / ${target.user.id} a été expulser pour la raison suivante : ${reason}`)
         Response.addField("Auteur De L'expulsion :", interaction.user.username)
         guild.channels.cache.get("909915653547376672").send({embeds: [Response] });
